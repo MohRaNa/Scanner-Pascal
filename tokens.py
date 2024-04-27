@@ -110,8 +110,8 @@ class integerToken():
     
 class identifierToken():
     id = 22
-    def getToken(self, identifier):
-        print("<" + self.id + ">")
+    def getToken(self):
+        print("<" + str(self.id) + ">")
         return self.id
 
 #Symbols
@@ -240,13 +240,13 @@ class closeMultiLineCommentToken():
 class integerConstantToken():
     id = 47
     entryNumber = []
-    def getToken(self, identifier):
+    def getToken(self):
         print("<" + str(self.id) +  ">")
         return self.id
 #STRING
 class stringToken():
     id = 48
     entryNumber = []
-    def getToken(self, identifier):
-        print("<" + self.id + ">")
+    def getToken(self):
+        print("<" + str(self.id) + ">")
         return self.id

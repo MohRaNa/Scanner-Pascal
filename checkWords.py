@@ -32,3 +32,4 @@ def checkSingleComment(word):
 # def checkMultipleComment(word):
 #     if word[0] == '(' and word[1] == '*':
 #         return '(*'
+
