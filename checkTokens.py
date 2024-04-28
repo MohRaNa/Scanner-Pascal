@@ -110,7 +110,7 @@ class checkTokens():
             "}": lambda: closeSingleLineComment.getToken(), #44
             "(*": lambda: openMultiLineComment.getToken(), #45
             "*)": lambda: closeMultiLineComment.getToken(), #46
-            "integer": lambda: integerConstant.getToken(), #47
+            "digit": lambda: integerConstant.getToken(), #47
             "string": lambda: stringT.getToken(), #48
 
 

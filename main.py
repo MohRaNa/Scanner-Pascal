@@ -7,10 +7,10 @@ def main():
     check = checkTokens()
 
     identifiers = [[]]
-    identifiersNum = 0
+    identifiersNum = 1
 
     digits = [[]]
-    digitsNum = 0
+    digitsNum = 1
 
     delimitadores = [
         ':', ';', '(', ')'
@@ -31,6 +31,7 @@ def main():
                 # print("Tokens Identifier", identifiers)
                 # print("Tokens Digits", digits)
                 char = char.lower()
+
                 if ubicacion != -1:
                     ubicacion = checkTransitionTable(char, ubicacion)
                     # print("Tokens Nums", tokensNum)
@@ -40,7 +41,7 @@ def main():
                         word = word + char 
                         # print("Word in <= 11: ",  word)                       
                 if ubicacion >= 11:
-                    print("Word: ", word)
+                    # print("Word: ", word)
                     if word != "":
                         if checkWord(word) is True:
                             # CHECA EL NUMERO DEL TOKEN DE LA PALABRA
@@ -80,27 +81,26 @@ def main():
 
                         # elif checkMultipleComment(word) ==
                         elif checkDigit(word) is True:
-
                             # CHECA SI EL DIGITO ESTA REGISTRADO EN LA LISTA DE DIGITOS
                             if word not in digits:
-                                
+                                # print("Word: "+ word)
                                 # REGRESA EL NUMERO DEL TOKEN
                                 numToken = check.readToken('digit')
                                 
                                 # AÑADE EL NUMERO A LA LISTA DE TOKENS
                                 tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(digitsNum) + ' >'])
-                                
 
                                 # AÑADE EL NUMERO A LA LISTA DE TOKENS DE DIGITOS
-                                digits[digitsNum].append([str(digitsNum), word])
+                                digits[0].append([str(digitsNum), word])
+                                digitsNum += 1
 
                                 ubicacion = checkTransitionTable(char, 0)
                                 word = char
-                                print("Word: " + word)
                                 if ubicacion >= 11:
                                     if checkWord(word) is True:
                                         # print("Word: ", word)
                                         numToken = check.readToken(word)
+                                        print(numToken)
 
                                         tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
 
@@ -115,17 +115,19 @@ def main():
                                 
                                 # OBTIENE EL TOKEN DEL IDENTIFICADOR
                                 numToken = check.readToken('identifier')
-                                print("Word: ", word)
-                                print(numToken)
+                                # print("Word: ", word)
+                                # print(numToken)
                                 # AÑADE EL TOKEN A LA LISTA DE TOKENS
-                                tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(digitsNum) + ' >'])
+                                tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(identifiersNum) + ' >'])
 
                                 # AÑADE A LOS TOKENS A LA LISTA DE TOKES DE IDENTIFICADORES
-                                identifiers[identifiersNum].append([str(numToken),word])
+                                identifiers[0].append([str(numToken),word])
+
+                                identifiersNum += 1
 
                                 ubicacion = checkTransitionTable(char, 0)
                                 word = char
-                                print("Word: ", word)
+                                # print("Word: ", word)
                                 
                                 #CHECA SI LA NUEVA PALABRA TIENE CONTINUACION,
                                 #SI NO HAY CONTINUACION LO AÑADE A LA LISTA DE TOKENS

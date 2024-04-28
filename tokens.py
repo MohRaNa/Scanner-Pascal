@@ -179,7 +179,7 @@ class semiColonToken():
     id = 35
     def getToken(self):
         print ("<" + str(self.id) + ">")
-        return
+        return self.id
 class comaToken():
     id = 36
     def getToken(self):

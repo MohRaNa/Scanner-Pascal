@@ -1,16 +1,1 @@
-program Ejemplo2;
-var
-a: integer;
-b: real;
-
-procedure assign (x: integer; y: real);
-begin
- a := x;
- b := y;
-end;
-
-begin
- assign(27, 3.1416);
- writeLn( ' a = ', a );
- writeLn( ' b = ', b );
-end.
+1;
