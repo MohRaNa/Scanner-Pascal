@@ -12,10 +12,21 @@ def csvTokens(libraryTokens):
 
 def csvIdentifiertokens(libraryTokens):
     with open('tokensIdentifier.csv','w', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerows(libraryTokens)
+        fieldnames = ["Entry", "Contents"]
+
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for token_list in libraryTokens:
+            for token in token_list:
+                writer.writerow({"Entry": token[0], "Contents": token[1]})
+
 
 def csvDigitTokens(libraryTokens):
     with open('tokensDigit.csv', 'w', newline='') as csvfile:
-        writer = csv.writer(csvfile)
-        writer.writerows(libraryTokens)
+        fieldnames = ["Entry", "Contents"]
+
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for token_list in libraryTokens:
+            for token in token_list:
+                writer.writerow({"Entry": token[0], "Contents": token[1]})

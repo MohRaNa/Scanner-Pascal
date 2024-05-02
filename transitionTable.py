@@ -66,6 +66,13 @@ def checkTransitionTable(char, ubicacion):
             "'": 51, '.': 51, "(": 39, ")": 39, "[": 39, "]": 39, "{": 39, "}": 39,
             "WhiteSpace": 39, "\n": 51, "Symbols": 51},
     }
+   # 1 No reconoce al final;
+   # 2 Separar Integer y Reales 
+   # 3 STRINGS
+   # 4 PALABRAS RESERVADAS NO RECONOCIDAS
+   # 5 DFA ACTUALIZADO
+   # 6 NO RECONOCER LOS TOKENS DE LOS 
+   # 7 HACER PRUEBAS
 
     Error = {
         "43 Error Salto de Linea": 43,
@@ -110,10 +117,12 @@ def checkTransitionTable(char, ubicacion):
                 else:
                     return transition_table[ubicacion]["WhiteSpace"]
         if char in transition_table[ubicacion]:
+            print("Char", char)
             if transition_table[ubicacion][char] in Error:
                 numberError = transition_table[ubicacion][char]
                 print(Error[numberError])
                 sys.exit()
+            print(transition_table[ubicacion][char])
             return transition_table[ubicacion][char]
         
 

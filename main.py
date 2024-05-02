@@ -12,11 +12,6 @@ def main():
     digits = [[]]
     digitsNum = 1
 
-    delimitadores = [
-        ':', ';', '(', ')'
-        '[', ']', '{', '}'
-    ]
-
     tokens = [[]]
     tokensNum = 0
 
@@ -34,17 +29,23 @@ def main():
 
                 if ubicacion != -1:
                     ubicacion = checkTransitionTable(char, ubicacion)
+                    
                     # print("Tokens Nums", tokensNum)
                     # print("Ubicacion: ", ubicacion)
                     # print("Char: ", char)
+                    if word == '' and ubicacion >= 11:
+                        word = word + char
                     if ubicacion <= 11:
                         word = word + char 
                         # print("Word in <= 11: ",  word)                       
                 if ubicacion >= 11:
                     # print("Word: ", word)
+                    # print(ubicacion)
+                    # print(word)
                     if word != "":
                         if checkWord(word) is True:
                             # CHECA EL NUMERO DEL TOKEN DE LA PALABRA
+                            
                             numToken = check.readToken(word)
 
                             # AÑADE EL TOKEN A LA LISTA
@@ -53,15 +54,26 @@ def main():
                             # UBICACION DEL NUEVO CHAR
                             ubicacion = checkTransitionTable(char, 0)
                             word = char 
+
+                            if ubicacion >= 11:
+                                if checkWord(word) is True:
+                                    
+                                    # REGRESA EL NUMERO DEL TOKEN
+                                    numToken = check.readToken(word)
+
+                                    # AÑADE EL NUMERO A LA LISTA DE TOKENS
+                                    tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
+                                    ubicacion = 0
+                                    word = ""
                         
                         # CHECA SI WORD EMPIEZA PRIMERO CON {
                         elif checkSingleComment(word) == '{':
                             
                             # REGRESA EL TOKEN DE {
-                            numToken = check.readToken('{')
+                            # numToken = check.readToken('{')
                             
                             # AÑADE EL TOKEN A LA LISTA
-                            tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
+                            # tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
 
                             # UBICACION DEL NUEVO CHAR
                             ubicacion = checkTransitionTable(char, 0)
@@ -82,7 +94,9 @@ def main():
                         # elif checkMultipleComment(word) ==
                         elif checkDigit(word) is True:
                             # CHECA SI EL DIGITO ESTA REGISTRADO EN LA LISTA DE DIGITOS
-                            if word not in digits:
+                            # if longitud_array > 0:
+                            #     newList = checkInList(digits, word)
+                            # if newList:
                                 # print("Word: "+ word)
                                 # REGRESA EL NUMERO DEL TOKEN
                                 numToken = check.readToken('digit')
@@ -100,47 +114,55 @@ def main():
                                     if checkWord(word) is True:
                                         # print("Word: ", word)
                                         numToken = check.readToken(word)
-                                        print(numToken)
+                                        # print(numToken)
 
                                         tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
 
                                         ubicacion = 0
                                         word = ""
+                            # elif newList in digits:
+                            #     for digitNum, wordL in digits:
+                            #         if wordL == word:
+                            #             numToken = check.readToken(word)
+                            #             tokens[tokensNum].append(['< ' + str(numToken) + ' , ' + str(digitNum) + ' >'])                 
 
                         elif checkDigit(word) is False:
                             # print("< " + str(identifiersNum) + " , " + str(word) + " >")
                             
                             # CHECA SI WORD ESTA EN LA LISTA DE IDENTIFICADORES
-                            if word not in identifiers:
+                            # newList = checkInList(digits, word)
+                            print(word)
+                            print(ubicacion)
+                            # if newList:
                                 
                                 # OBTIENE EL TOKEN DEL IDENTIFICADOR
-                                numToken = check.readToken('identifier')
+                            numToken = check.readToken('identifier')
+                            # print("Word: ", word)
+                            # print(numToken)
+                            # AÑADE EL TOKEN A LA LISTA DE TOKENS
+                            tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(identifiersNum) + ' >'])
+
+                            # AÑADE A LOS TOKENS A LA LISTA DE TOKES DE IDENTIFICADORES
+                            identifiers[0].append([str(identifiersNum),word])
+
+                            identifiersNum += 1
+
+                            ubicacion = checkTransitionTable(char, 0)
+                            word = char
+                            # print("Word: ", word)
+                            
+                            #CHECA SI LA NUEVA PALABRA TIENE CONTINUACION,
+                            #SI NO HAY CONTINUACION LO AÑADE A LA LISTA DE TOKENS
+                            if ubicacion >= 11:
                                 # print("Word: ", word)
-                                # print(numToken)
-                                # AÑADE EL TOKEN A LA LISTA DE TOKENS
-                                tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(identifiersNum) + ' >'])
-
-                                # AÑADE A LOS TOKENS A LA LISTA DE TOKES DE IDENTIFICADORES
-                                identifiers[0].append([str(numToken),word])
-
-                                identifiersNum += 1
-
-                                ubicacion = checkTransitionTable(char, 0)
-                                word = char
-                                # print("Word: ", word)
-                                
-                                #CHECA SI LA NUEVA PALABRA TIENE CONTINUACION,
-                                #SI NO HAY CONTINUACION LO AÑADE A LA LISTA DE TOKENS
-                                if ubicacion >= 11:
+                                if checkWord(word) is True:
                                     # print("Word: ", word)
-                                    if checkWord(word) is True:
-                                        # print("Word: ", word)
-                                        numToken = check.readToken(word)
+                                    numToken = check.readToken(word)
 
-                                        tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
+                                    tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
 
-                                        ubicacion = 0
-                                        word = ""                                        
+                                    ubicacion = 0
+                                    word = ""                                        
     
     csvTokens(tokens)
     csvDigitTokens(digits)
