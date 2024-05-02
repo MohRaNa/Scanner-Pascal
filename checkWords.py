@@ -25,7 +25,12 @@ def checkWord(word):
 def checkDigit(word):
     return word[0].isdigit()
 
-def checkSingleComment(word):    
+def checkIntegerReal(word):
+    if "." in word:
+        return True
+    return False
+
+def checkSingleComment(word,):    
     if word[0] == '{':
         return '{'
     return ''

@@ -15,12 +15,18 @@ def main():
     tokens = [[]]
     tokensNum = 0
 
+    saltoDeLinea = False
+
 
     with open('code.txt','r') as file:   
         for line in file:
+
             word = ""
             ubicacion = 0
             for char in line:
+                if char == "\n":
+                    saltoDeLinea = True
+                # QUITA LOS ESPACIOS DE LA PALABRA
                 word = word.lstrip()
                 # print("Tokens", tokens)
                 # print("Tokens Identifier", identifiers)
@@ -54,6 +60,7 @@ def main():
                             # UBICACION DEL NUEVO CHAR
                             ubicacion = checkTransitionTable(char, 0)
                             word = char 
+                            saltoDeLinea = False
 
                             if ubicacion >= 11:
                                 if checkWord(word) is True:
@@ -65,6 +72,7 @@ def main():
                                     tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
                                     ubicacion = 0
                                     word = ""
+                                    saltoDeLinea = False
                         
                         # CHECA SI WORD EMPIEZA PRIMERO CON {
                         elif checkSingleComment(word) == '{':
@@ -78,6 +86,7 @@ def main():
                             # UBICACION DEL NUEVO CHAR
                             ubicacion = checkTransitionTable(char, 0)
                             word = char
+                            saltoDeLinea = False
 
                             # CHECA SI LA UBICACION ES MAYOR A 11
                             if ubicacion >= 11:
@@ -90,6 +99,7 @@ def main():
                                     tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
                                     ubicacion = 0
                                     word = ""
+                                    saltoDeLinea = False
 
                         # elif checkMultipleComment(word) ==
                         elif checkDigit(word) is True:
@@ -99,7 +109,10 @@ def main():
                             # if newList:
                                 # print("Word: "+ word)
                                 # REGRESA EL NUMERO DEL TOKEN
-                                numToken = check.readToken('digit')
+                                if checkIntegerReal(word) is True:
+                                    numToken = check.readToken('digit')
+                                else:
+                                    numToken = check.readToken('real')
                                 
                                 # AÑADE EL NUMERO A LA LISTA DE TOKENS
                                 tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(digitsNum) + ' >'])
@@ -110,6 +123,8 @@ def main():
 
                                 ubicacion = checkTransitionTable(char, 0)
                                 word = char
+                                saltoDeLinea = False
+
                                 if ubicacion >= 11:
                                     if checkWord(word) is True:
                                         # print("Word: ", word)
@@ -120,6 +135,7 @@ def main():
 
                                         ubicacion = 0
                                         word = ""
+                                        saltoDeLinea = False
                             # elif newList in digits:
                             #     for digitNum, wordL in digits:
                             #         if wordL == word:
@@ -131,8 +147,8 @@ def main():
                             
                             # CHECA SI WORD ESTA EN LA LISTA DE IDENTIFICADORES
                             # newList = checkInList(digits, word)
-                            print(word)
-                            print(ubicacion)
+                            # print(word)
+                            # print(ubicacion)
                             # if newList:
                                 
                                 # OBTIENE EL TOKEN DEL IDENTIFICADOR
@@ -149,6 +165,8 @@ def main():
 
                             ubicacion = checkTransitionTable(char, 0)
                             word = char
+
+                            saltoDeLinea = False
                             # print("Word: ", word)
                             
                             #CHECA SI LA NUEVA PALABRA TIENE CONTINUACION,
@@ -162,7 +180,8 @@ def main():
                                     tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
 
                                     ubicacion = 0
-                                    word = ""                                        
+                                    word = ""
+                                    saltoDeLinea = False                                        
     
     csvTokens(tokens)
     csvDigitTokens(digits)

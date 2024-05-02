@@ -54,8 +54,10 @@ class checkTokens():
         openMultiLineComment = openMultiLineCommentToken()
         closeMultiLineComment = closeMultiLineCommentToken()
 
+
         #Integer - Real
         integerConstant = integerConstantToken()
+        real = realConstantToken()
 
         #String
         stringT = stringToken()
@@ -106,12 +108,13 @@ class checkTokens():
             ")": lambda: closeParenthesis.getToken(), #40
             "[": lambda: openSquareBrackets.getToken(), #41
             "]": lambda: closeSquareBrackets.getToken(), #42
-            "{": lambda: openSingleLineComment.getToken(), #43
-            "}": lambda: closeSingleLineComment.getToken(), #44
-            "(*": lambda: openMultiLineComment.getToken(), #45
-            "*)": lambda: closeMultiLineComment.getToken(), #46
-            "digit": lambda: integerConstant.getToken(), #47
-            "string": lambda: stringT.getToken(), #48
+            "{": lambda: openSingleLineComment.getToken(), 
+            "}": lambda: closeSingleLineComment.getToken(), 
+            "(*": lambda: openMultiLineComment.getToken(), 
+            "*)": lambda: closeMultiLineComment.getToken(), 
+            "digit": lambda: integerConstant.getToken(), #43
+            "string": lambda: stringT.getToken(), #44
+            "real": lambda: real.getToken() #45
 
         }
 
