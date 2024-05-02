@@ -47,7 +47,7 @@ def checkTransitionTable(char, ubicacion):
             "WhiteSpace": 21, "\n": 21, "Symbols": 46},
 
         8: {'Letter': 8, 'Digit': 8, '_': 8, '+': 8, '-': 8, '*': 8, '/': 8,
-            '<': 8, '>': 8, '=': 8, ':': 8, ';': 8, ',': 22, "'": 8, '.': 8,
+            '<': 8, '>': 8, '=': 8, ':': 8, ';': 8, ',': 8, "'": 22, '.': 8,
             "(": 8, ")": 8, "[": 8, "]": 8, "{": 47, "}": 8,
             "WhiteSpace": 8, "\n": 47, "Symbols": 8},
 
@@ -67,14 +67,11 @@ def checkTransitionTable(char, ubicacion):
             "WhiteSpace": 39, "\n": 51, "Symbols": 51},
     }
 
-   # 2 Separar Integer y Reales 
    # 3 STRINGS
    # 5 DFA ACTUALIZADO
    # 7 HACER PRUEBAS
    # Parentesis... identificar si sigue a un * o no 
-   # Checar si se imprime dos veces el mismo token
    # Checar porque los errores no cierran el sistema
-   # Checar delimitadores := <> y 
 
     Error = {
         "43 Error Salto de Linea": 43,
@@ -124,8 +121,8 @@ def checkTransitionTable(char, ubicacion):
                 numberError = transition_table[ubicacion][char]
                 print(Error[numberError])
                 sys.exit()
-            if char == "=":
-                print(transition_table[ubicacion][char])    
+            
+            print(transition_table[ubicacion][char])    
             return transition_table[ubicacion][char]
         
 

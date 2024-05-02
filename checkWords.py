@@ -14,7 +14,7 @@ def checkWord(word):
     ]
     delimitadores = [
         ':', ';', '(', ')', 
-        ',', '[', ']', 
+        ',', '[', ']', '.'
     ]
     
 
@@ -30,17 +30,34 @@ def checkIntegerReal(word):
         return True
     return False
 
-def checkSingleComment(word,):    
+def checkSingleComment(word):    
     if word[0] == '{':
         return '{'
     return ''
 
-# def checkMultipleComment(word):
-#     if word[0] == '(' and word[1] == '*':
-#         return '(*'
+def checkMultipleComment(word):
+    if word[0] == '(' and word[1] == '*':
+         return '(*'
+
+def checkString(word):
+    if word[0] == "'" and word[-1] == "'":
+        return True
+    return False
 
 def checkInList(word_list, word):
     for elemento in word_list:
         if word == elemento[1]:
             return elemento
     return None
+
+def continueOperador(word, char):
+    operadorContinue = [
+        ':=', '<>',
+        '<=', '>=',
+    ]
+
+    word = word + char
+
+    if word in operadorContinue:
+        return True
+    return False

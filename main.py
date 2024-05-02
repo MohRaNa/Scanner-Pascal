@@ -16,7 +16,7 @@ def main():
     tokensNum = 0
 
     saltoDeLinea = False
-
+    operador = False
 
     with open('code.txt','r') as file:   
         for line in file:
@@ -31,8 +31,12 @@ def main():
                 # print("Tokens", tokens)
                 # print("Tokens Identifier", identifiers)
                 # print("Tokens Digits", digits)
-                char = char.lower()
 
+                #MINIMIZA LOS CARACTERES
+                char = char.lower()
+                print("Word: " +  str(word) + " Ubicacion: " + str(ubicacion) + " Char: "  +  str(char)) 
+
+                operador = continueOperador(word, char) 
                 if ubicacion != -1:
                     ubicacion = checkTransitionTable(char, ubicacion)
                     
@@ -41,13 +45,29 @@ def main():
                     # print("Char: ", char)
                     if word == '' and ubicacion >= 11:
                         word = word + char
-                    if ubicacion <= 11:
-                        word = word + char 
-                        # print("Word in <= 11: ",  word)                       
-                if ubicacion >= 11:
-                    # print("Word: ", word)
-                    # print(ubicacion)
+                    if ubicacion <= 11: 
+                        # print("Word: " +  str(word) + " Ubicacion: " + str(ubicacion) + " Char: "  +  str(char)) 
+                        word = word + char
+                        # print("Word: " +  str(word) + " Ubicacion: " + str(ubicacion) + " Char: "  +  str(char)) 
+                        # print("Word in <= 11: ",  word)
+                    if word[0] == "'" and char == "'":
+                        word = word + char
+                 
+                if operador is True:
+                        word = word + char
+                        numToken = check.readToken(word)
+
+                        # AÑADE EL TOKEN A LA LISTA
+                        tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
+                            
+                        print("Word: " +  str(word) + " Ubicacion: " + str(ubicacion) + " Char: "  +  str(char)) 
+                        word = ''
+                        ubicacion = 0
+
+                if ubicacion >= 11 and operador is False:
+                    # print("Word: " +  str(word) + " Ubicacion: " + str(ubicacion)) 
                     # print(word)
+                    
                     if word != "":
                         if checkWord(word) is True:
                             # CHECA EL NUMERO DEL TOKEN DE LA PALABRA
@@ -56,6 +76,8 @@ def main():
 
                             # AÑADE EL TOKEN A LA LISTA
                             tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
+                            
+                            print("Word: " +  str(word) + " Ubicacion: " + str(ubicacion) + " Token: " + str(numToken)) 
 
                             # UBICACION DEL NUEVO CHAR
                             ubicacion = checkTransitionTable(char, 0)
@@ -64,8 +86,9 @@ def main():
 
                             if ubicacion >= 11:
                                 if checkWord(word) is True:
-                                    
                                     # REGRESA EL NUMERO DEL TOKEN
+                                    print("Word: " +  str(word) + " Ubicacion: " + str(ubicacion) + " Token: " + str(numToken)) 
+
                                     numToken = check.readToken(word)
 
                                     # AÑADE EL NUMERO A LA LISTA DE TOKENS
@@ -99,9 +122,16 @@ def main():
                                     tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
                                     ubicacion = 0
                                     word = ""
-                                    saltoDeLinea = False
 
                         # elif checkMultipleComment(word) ==
+                        elif checkString(word) is True:
+                            numToken = check.readToken('string')
+                            # AÑADE EL NUMERO A LA LISTA DE TOKENS DE DIGITOS
+                            tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
+
+                            word = ''
+                            ubicacion = 0
+
                         elif checkDigit(word) is True:
                             # CHECA SI EL DIGITO ESTA REGISTRADO EN LA LISTA DE DIGITOS
                             # if longitud_array > 0:

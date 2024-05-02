@@ -19,14 +19,11 @@ Entry,Contents
 18,main
 19,block
 20,assign
-21,' a = '
-22,a
-23,' b = '
-24,b
-25,.
-26,this
-27,is
-28,the
-29,the
-30,main
-31,block
+21,a
+22,b
+23,this
+24,is
+25,the
+26,the
+27,main
+28,block
