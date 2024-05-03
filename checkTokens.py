@@ -1,5 +1,8 @@
 from tokens import *
+
+# INICIALIZA TODA LA CLASE DE TOKENS
 class checkTokens():
+    
     def readToken(self, word):
 
         program = programToken()
@@ -63,6 +66,7 @@ class checkTokens():
         stringT = stringToken()
 
 
+        # ELIGE EL TOKEN  QUE SE MANDARA MEDIANNTE UN SWITCH
         switch = {
             #Reserved Words
             "program": lambda: program.getToken(), #1
@@ -114,7 +118,7 @@ class checkTokens():
             "*)": lambda: closeMultiLineComment.getToken(), 
             "digit": lambda: integerConstant.getToken(), #43
             "string": lambda: stringT.getToken(), #44
-            "real": lambda: real.getToken() #45
+            "realC": lambda: real.getToken() #45
 
         }
 

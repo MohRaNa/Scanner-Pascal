@@ -2,6 +2,7 @@ import sys
 
 def checkTransitionTable(char, ubicacion):
 
+    #Tabla de Transiciones
     transition_table = {
 
         0: {'Letter': 2, 'Digit': 3, '_': 1, '+': 27, '-': 28, 
@@ -67,12 +68,7 @@ def checkTransitionTable(char, ubicacion):
             "WhiteSpace": 39, "\n": 51, "Symbols": 51},
     }
 
-   # 3 STRINGS
-   # 5 DFA ACTUALIZADO
-   # 7 HACER PRUEBAS
-   # Parentesis... identificar si sigue a un * o no 
-   # Checar porque los errores no cierran el sistema
-
+    # Errores
     Error = {
         "43 Error Salto de Linea": 43,
         "44 Error no Continua con Letra": 44,
@@ -90,8 +86,9 @@ def checkTransitionTable(char, ubicacion):
         "56 Error No Sigue Digito": 56
     }
 
+    #CHECA LA UBICACION DE LA TABLA DE TRANSICIONES Y REGRESA LA UBICACION O ERROR
     if ubicacion in transition_table:
-        # print("Char: ", char)
+        #CHECA SI ES UNA LETRA 
         if char.isalpha():
             if "Letter" in transition_table[ubicacion]:
                 if transition_table[ubicacion]["Letter"] in Error:
@@ -99,6 +96,7 @@ def checkTransitionTable(char, ubicacion):
                     print(Error[numberError])
                     sys.exit()
                 return transition_table[ubicacion]["Letter"]
+        # CHECA SI ES UN DIGITO
         if char.isdigit():
             if "Digit" in transition_table[ubicacion]:
                 if transition_table[ubicacion]["Digit"] in Error:
@@ -107,6 +105,7 @@ def checkTransitionTable(char, ubicacion):
                     sys.exit()
                 else:
                     return transition_table[ubicacion]["Digit"]
+        # cHECA SI ES UN ESPACIO
         if char.isspace():
             if "WhiteSpace" in transition_table[ubicacion]:
                 if transition_table[ubicacion]["WhiteSpace"] in Error:
@@ -115,17 +114,16 @@ def checkTransitionTable(char, ubicacion):
                     sys.exit()
                 else:
                     return transition_table[ubicacion]["WhiteSpace"]
+        # CHECA SI EL CHAR ESTA EN LA TABLA DE TRANSICIONES
         if char in transition_table[ubicacion]:
             # print("Char", char)
             if transition_table[ubicacion][char] in Error:
                 numberError = transition_table[ubicacion][char]
                 print(Error[numberError])
                 sys.exit()
-            
-            print(transition_table[ubicacion][char])    
             return transition_table[ubicacion][char]
         
-
+        # CHECA SI ES UN SYMBOLO
         if not char.isalpha() and not char.isdigit():
             if "Symbols" in transition_table[ubicacion]:
                 if transition_table[ubicacion]["Symbols"] in Error:
