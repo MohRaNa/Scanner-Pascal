@@ -86,7 +86,8 @@ def checkTransitionTable(char, ubicacion):
         "56 Error No Sigue Digito": 56
     }
 
-    #CHECA LA UBICACION DE LA TABLA DE TRANSICIONES Y REGRESA LA UBICACION O ERROR
+    # CHECA LA UBICACION DE LA TABLA DE TRANSICIONES Y REGRESA LA UBICACION O ERROR
+
     if ubicacion in transition_table:
         #CHECA SI ES UNA LETRA 
         if char.isalpha():
@@ -105,7 +106,7 @@ def checkTransitionTable(char, ubicacion):
                     sys.exit()
                 else:
                     return transition_table[ubicacion]["Digit"]
-        # cHECA SI ES UN ESPACIO
+        # CHECA SI ES UN ESPACIO
         if char.isspace():
             if "WhiteSpace" in transition_table[ubicacion]:
                 if transition_table[ubicacion]["WhiteSpace"] in Error:

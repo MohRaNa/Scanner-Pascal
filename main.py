@@ -10,9 +10,15 @@ def main():
     identifiers = [[]]
     identifiersNum = 1
 
-    #INICIALIZAR ARRAY DE DIGITOS
+    
+
+    #INICIALIZAR ARRAY DE INTEGERS
     digits = [[]]
     digitsNum = 1
+
+    #INCIALIZAR ARRAY DE REALES
+    reals = [[]]
+    realsNum = 1
 
     #INICIALIZAR ARRAY DE STRINGS
     strings = [[]]
@@ -21,6 +27,7 @@ def main():
     #INICIALIZAR DE TOKENS
     tokens = [[]]
     tokensNum = 0
+
 
     saltoDeLinea = False
     operador = False
@@ -133,16 +140,21 @@ def main():
                         elif checkDigit(word) is True:
                                 # REGRESA EL NUMERO DEL TOKEN
                                 if checkIntegerReal(word) is True:
+                                    # AÑADE EL NUMERO A LA LISTA DE TOKENS
                                     numToken = check.readToken('digit')
-                                else:
-                                    numToken = check.readToken('realC')
-                                
-                                # AÑADE EL NUMERO A LA LISTA DE TOKENS
-                                tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(digitsNum) + ' >'])
+                                    tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(digitsNum) + ' >'])
 
-                                # AÑADE EL NUMERO A LA LISTA DE TOKENS DE DIGITOS
-                                digits[0].append([str(digitsNum), word])
-                                digitsNum += 1
+                                    # AÑADE EL NUMERO A LA LISTA DE TOKENS DE DIGITOS
+                                    digits[0].append([str(digitsNum), word])
+                                    digitsNum += 1
+                                else:
+                                    numToken = check.readToken('real')
+                                    # AÑADE EL NUMERO A LA LISTA DE TOKENS
+                                    tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(digitsNum) + ' >'])
+
+                                    # AÑADE EL NUMERO A LA LISTA DE TOKENS DE DIGITOS
+                                    reals[0].append([str(realsNum), word])
+                                    realsNum += 1
 
                                 # CHECA EL SIGUIENTE CARACTER A LA TABLA DE TRANSICION
                                 ubicacion = checkTransitionTable(char, 0)
@@ -198,6 +210,7 @@ def main():
     csvTokens(tokens)
     csvDigitTokens(digits)
     csvIdentifiertokens(identifiers)
+    csvRealtokens(reals)
 
                        
                 

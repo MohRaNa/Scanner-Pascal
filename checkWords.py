@@ -27,8 +27,9 @@ def checkDigit(word):
 
 def checkIntegerReal(word):
     if "." in word:
-        return True
-    return False
+        print(word) 
+        return False
+    return True
 
 def checkSingleComment(word):    
     if word[0] == '{':
