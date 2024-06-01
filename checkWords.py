@@ -26,6 +26,8 @@ def checkDigit(word):
     return word[0].isdigit()
 
 def checkIntegerReal(word):
+    
+    
     if "." in word:
         print(word) 
         return False
@@ -62,3 +64,8 @@ def continueOperador(word, char):
     if word in operadorContinue:
         return True
     return False
+
+def findWordList(word, list):
+    for sublist in list[0]:
+        if word in sublist:
+            return sublist[0]

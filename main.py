@@ -10,8 +10,6 @@ def main():
     identifiers = [[]]
     identifiersNum = 1
 
-    
-
     #INICIALIZAR ARRAY DE INTEGERS
     digits = [[]]
     digitsNum = 1
@@ -112,7 +110,6 @@ def main():
                             # UBICACION DEL NUEVO CHAR
                             ubicacion = checkTransitionTable(char, 0)
                             word = char
-                            saltoDeLinea = False
 
                             # CHECA SI LA UBICACION ES MAYOR A 11
                             if ubicacion >= 11:
@@ -126,7 +123,23 @@ def main():
                                     ubicacion = 0
                                     word = ""
 
-                        # elif checkMultipleComment(word) ==
+                        elif checkMultipleComment(word) == '{*':
+                            
+                            ubicacion = checkTransitionTable(char, 0)
+                            word = char
+
+                            # CHECA SI LA UBICACION ES MAYOR A 11
+                            if ubicacion >= 11:
+                                if checkWord(word) is True:
+                                    
+                                    # REGRESA EL NUMERO DEL TOKEN
+                                    numToken = check.readToken(word)
+
+                                    # AÑADE EL NUMERO A LA LISTA DE TOKENS
+                                    tokens[tokensNum].append(['< ' + str(numToken) + ' >'])
+                                    ubicacion = 0
+                                    word = ""
+
                         elif checkString(word) is True:
                             numToken = check.readToken('string')
                             # AÑADE EL NUMERO A LA LISTA DE TOKENS DE DIGITOS
@@ -138,23 +151,35 @@ def main():
                             ubicacion = 0
                         # CHECA SI EL DIGITO ES VERDADERO
                         elif checkDigit(word) is True:
-                                # REGRESA EL NUMERO DEL TOKEN
+                                # CHECA SI WORD ES INTEGER O REAL
+                                # SI ES INTEGER ES TRUE
                                 if checkIntegerReal(word) is True:
                                     # AÑADE EL NUMERO A LA LISTA DE TOKENS
                                     numToken = check.readToken('digit')
-                                    tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(digitsNum) + ' >'])
+                                    
+                                    integerFound = findWordList(word, digits)
+                                    if integerFound:
+                                        tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(integerFound) + ' >'])
+                                    else:
+                                        tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(digitsNum) + ' >'])
 
-                                    # AÑADE EL NUMERO A LA LISTA DE TOKENS DE DIGITOS
-                                    digits[0].append([str(digitsNum), word])
-                                    digitsNum += 1
+                                        # AÑADE EL NUMERO A LA LISTA DE TOKENS DE DIGITOS
+                                        digits[0].append([str(digitsNum), word])
+                                        digitsNum += 1
+                                # SI ES REAL ES FALSO
                                 else:
                                     numToken = check.readToken('real')
                                     # AÑADE EL NUMERO A LA LISTA DE TOKENS
-                                    tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(digitsNum) + ' >'])
+                                    realFound = findWordList(word, reals)
 
-                                    # AÑADE EL NUMERO A LA LISTA DE TOKENS DE DIGITOS
-                                    reals[0].append([str(realsNum), word])
-                                    realsNum += 1
+                                    if realFound:
+                                        tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(realsNum) + ' >'])
+                                    else:
+                                        tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(digitsNum) + ' >'])
+                                            
+                                        # AÑADE EL NUMERO A LA LISTA DE TOKENS DE DIGITOS
+                                        reals[0].append([str(realsNum), word])
+                                        realsNum += 1
 
                                 # CHECA EL SIGUIENTE CARACTER A LA TABLA DE TRANSICION
                                 ubicacion = checkTransitionTable(char, 0)
@@ -178,14 +203,19 @@ def main():
 
                             # OBTIENE EL TOKEN DEL IDENTIFICADOR
                             numToken = check.readToken('identifier')
+                            
+                            identifierFound = findWordList(word, identifiers)
+                            if identifierFound:
+                                tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(identifierFound) + ' >'])
 
-                            # AÑADE EL TOKEN A LA LISTA DE TOKENS
-                            tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(identifiersNum) + ' >'])
+                            else:
+                                # AÑADE EL TOKEN A LA LISTA DE TOKENS
+                                tokens[tokensNum].append(['< ' + str(numToken) + ' , '+ str(identifiersNum) + ' >'])
 
-                            # AÑADE A LOS TOKENS A LA LISTA DE TOKES DE IDENTIFICADORES
-                            identifiers[0].append([str(identifiersNum),word])
+                                # AÑADE A LOS TOKENS A LA LISTA DE TOKES DE IDENTIFICADORES
+                                identifiers[0].append([str(identifiersNum),word])
 
-                            identifiersNum += 1
+                                identifiersNum += 1
 
                             # CHECA EL NUEVO CARACTER EN LA TABLA DE TRANSICION
                             ubicacion = checkTransitionTable(char, 0)
